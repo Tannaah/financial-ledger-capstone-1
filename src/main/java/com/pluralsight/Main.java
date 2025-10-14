@@ -11,7 +11,7 @@ public class Main {
         while (running) {
             System.out.println("\n==== Home Menu ====");
             System.out.println("D) Add Deposit");
-            System.out.println("P) Make Payment (Debit)");
+            System.out.println("P) Make a Payment (Debit)");
             System.out.println("L) Ledger");
             System.out.println("X) Exit");
             System.out.print("Choose an option: ");
@@ -40,7 +40,29 @@ public class Main {
                     break;
 
                 case "P":
-                    // Make payment
+                    System.out.print("Enter description: ");
+                    String paymentDescription = scanner.nextLine();
+
+                    System.out.print("Enter vendor: ");
+                    String paymentVendor = scanner.nextLine();
+
+                    System.out.print("Enter amount: ");
+                    double paymentAmount = Double.parseDouble(scanner.nextLine());
+
+                    // Make sure the amount is stored as a negative value
+                    if (paymentAmount > 0) {
+                        paymentAmount *= -1;
+                    }
+                    Transaction payment = new Transaction(
+                            java.time.LocalDate.now(),
+                            java.time.LocalTime.now(),
+                            paymentDescription,
+                            paymentVendor,
+                            paymentAmount
+                    );
+
+                    ledger.addTransaction(payment);
+                    System.out.println("Payment added successfully!");
                     break;
                 case "L":
                     // Show ledger
