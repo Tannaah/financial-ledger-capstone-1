@@ -50,7 +50,7 @@ public class TransactionLedger {
     }
     private void saveTransactionToFile(Transaction transaction) {
         try (PrintWriter writer = new PrintWriter(new FileWriter(fileName, true))) {
-            writer.printf("%s|%s|%s|%s|%.2f%n",
+            writer.printf("\n%s|%s|%s|%s|%.2f%n",
                     transaction.getDate(),
                     transaction.getTime(),
                     transaction.getDescription(),
