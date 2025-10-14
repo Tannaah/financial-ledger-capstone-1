@@ -19,8 +19,26 @@ public class Main {
 
             switch (choice) {
                 case "D":
-                    // Add deposit
+                    System.out.print("Enter description: ");
+                    String depositDescription = scanner.nextLine();
+
+                    System.out.print("Enter vendor: ");
+                    String depositVendor = scanner.nextLine();
+
+                    System.out.print("Enter amount: ");
+                    double depositAmount = Double.parseDouble(scanner.nextLine());
+
+                    Transaction deposit = new Transaction(
+                            java.time.LocalDate.now(),
+                            java.time.LocalTime.now(),
+                            depositDescription,
+                            depositVendor,
+                            depositAmount
+                    );
+                    ledger.addTransaction(deposit);
+                    System.out.println("Deposit added successfully!");
                     break;
+
                 case "P":
                     // Make payment
                     break;
