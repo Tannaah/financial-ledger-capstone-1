@@ -3,6 +3,7 @@ package com.pluralsight;
 import java.io.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,10 +50,12 @@ public class TransactionLedger {
         }
     }
     private void saveTransactionToFile(Transaction transaction) {
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+
         try (PrintWriter writer = new PrintWriter(new FileWriter(fileName, true))) {
             writer.printf("\n%s|%s|%s|%s|%.2f%n",
                     transaction.getDate(),
-                    transaction.getTime(),
+                    transaction.getTime().format(timeFormatter),
                     transaction.getDescription(),
                     transaction.getVendor(),
                     transaction.getAmount());
