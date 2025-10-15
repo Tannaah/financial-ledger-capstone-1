@@ -165,7 +165,7 @@ public class Main {
                     showYearToDate(ledger);
                     break;
                 case "4":
-                    //showPreviousYear(ledger);
+                    showPreviousYear(ledger);
                     break;
                 case "5":
                     //searchByVendor(ledger, scanner);
@@ -222,6 +222,25 @@ public class Main {
 
             if ((transactionDate.isEqual(startOfYear) || transactionDate.isAfter(startOfYear)) &&
                     (transactionDate.isEqual(today) || transactionDate.isBefore(today))) {
+                System.out.println(t);
+            }
+        }
+    }
+
+    private static void showPreviousYear(TransactionLedger ledger) {
+        System.out.println("\n--- Previous Year Transactions ---");
+
+        java.time.LocalDate today = java.time.LocalDate.now();
+        int previousYear = today.getYear() - 1;
+
+        java.time.LocalDate startOfPreviousYear = java.time.LocalDate.of(previousYear, 1, 1);
+        java.time.LocalDate endOfPreviousYear = java.time.LocalDate.of(previousYear, 12, 31);
+
+        for (Transaction t : ledger.getAllTransactions()) {
+            java.time.LocalDate transactionDate = t.getDate();
+
+            if ((transactionDate.isEqual(startOfPreviousYear) || transactionDate.isAfter(startOfPreviousYear)) &&
+                    (transactionDate.isEqual(endOfPreviousYear) || transactionDate.isBefore(endOfPreviousYear))) {
                 System.out.println(t);
             }
         }
