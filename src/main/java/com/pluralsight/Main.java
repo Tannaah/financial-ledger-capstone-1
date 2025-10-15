@@ -156,22 +156,37 @@ public class Main {
                     showMonthToDate(ledger);
                     break;
                 case "2":
-                    showPreviousMonth(ledger);
+                    //showPreviousMonth(ledger);
                     break;
                 case "3":
-                    showYearToDate(ledger);
+                    //showYearToDate(ledger);
                     break;
                 case "4":
-                    showPreviousYear(ledger);
+                    //showPreviousYear(ledger);
                     break;
                 case "5":
-                    searchByVendor(ledger, scanner);
+                    //searchByVendor(ledger, scanner);
                     break;
                 case "0":
                     viewingReports = false;
                     break;
                 default:
                     System.out.println("Invalid option. Try again.");
+            }
+        }
+    }
+    private static void showMonthToDate(TransactionLedger ledger) {
+        System.out.println("\n--- Month To Date Transactions ---");
+
+        int currentYear = java.time.LocalDate.now().getYear();
+        int currentMonth = java.time.LocalDate.now().getMonthValue();
+
+        List<Transaction> allTransactions = ledger.getAllTransactions();
+
+        for (Transaction t : allTransactions) {
+            if (t.getDate().getYear() == currentYear &&
+                    t.getDate().getMonthValue() == currentMonth) {
+                System.out.println(t);
             }
         }
     }
