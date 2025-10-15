@@ -75,7 +75,8 @@ public class Main {
                 default:
                     System.out.println("Invalid option. Try again.");
             }
-        } System.out.println("Thanks for choosing Tanner's Financial Ledger, Have a nice day!");
+        }
+        System.out.println("Thanks for choosing Tanner's Financial Ledger, Have a nice day!");
     }
 
     private static void showLedgerMenu(TransactionLedger ledger, Scanner scanner) {
@@ -86,6 +87,7 @@ public class Main {
             System.out.println("A) Show All Transactions");
             System.out.println("D) Show Deposits Only");
             System.out.println("P) Show Payments Only");
+            System.out.println("R) Show Reports");
             System.out.println("H) Home");
             System.out.print("Choose an option: ");
             String choice = scanner.nextLine().trim().toUpperCase();
@@ -120,6 +122,11 @@ public class Main {
                     }
                     break;
 
+                case "R":
+                    showReportsMenu(ledger, scanner);
+
+                    break;
+
                 case "H":
                     viewingLedger = false;
                     break;
@@ -130,5 +137,42 @@ public class Main {
         }
     }
 
-}
+    private static void showReportsMenu(TransactionLedger ledger, Scanner scanner) {
+        boolean viewingReports = true;
 
+        while (viewingReports) {
+            System.out.println("\n==== Reports Menu ====");
+            System.out.println("1) Month To Date");
+            System.out.println("2) Previous Month");
+            System.out.println("3) Year To Date");
+            System.out.println("4) Previous Year");
+            System.out.println("5) Search by Vendor");
+            System.out.println("0) Back to Ledger Menu");
+            System.out.print("Choose an option: ");
+            String choice = scanner.nextLine().trim();
+
+            switch (choice) {
+                case "1":
+                    showMonthToDate(ledger);
+                    break;
+                case "2":
+                    showPreviousMonth(ledger);
+                    break;
+                case "3":
+                    showYearToDate(ledger);
+                    break;
+                case "4":
+                    showPreviousYear(ledger);
+                    break;
+                case "5":
+                    searchByVendor(ledger, scanner);
+                    break;
+                case "0":
+                    viewingReports = false;
+                    break;
+                default:
+                    System.out.println("Invalid option. Try again.");
+            }
+        }
+    }
+}
