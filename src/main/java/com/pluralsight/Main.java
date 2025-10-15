@@ -29,8 +29,13 @@ public class Main {
                     String depositVendor = scanner.nextLine();
 
                     System.out.print("Enter amount: ");
-                    double depositAmount = Double.parseDouble(scanner.nextLine());
-                    //todo fix error
+                    double depositAmount;
+                    try {
+                        depositAmount = Double.parseDouble(scanner.nextLine());
+                    } catch (NumberFormatException e) {
+                        System.out.println("\nInvalid input. Please enter a number.");
+                        break;
+                    }
 
                     Transaction deposit = new Transaction(
                             java.time.LocalDate.now(),
@@ -51,7 +56,13 @@ public class Main {
                     String paymentVendor = scanner.nextLine();
 
                     System.out.print("Enter amount: ");
-                    double paymentAmount = Double.parseDouble(scanner.nextLine());
+                    double paymentAmount;
+                    try {
+                        paymentAmount = Double.parseDouble(scanner.nextLine());
+                    } catch (NumberFormatException e) {
+                        System.out.println("\nInvalid input. Please enter a number.");
+                        break;
+                    }
                     //todo fix error
 
                     // Make sure the amount is stored as a negative value
@@ -257,7 +268,7 @@ public class Main {
             }
 
             boolean found = false;
-            System.out.println("\n--- Transactions Matching Vendor: " + vendorSearch + " ---");
+            System.out.println("\n--- Transactions Matching Vendor: " + vendorSearch.toLowerCase() + " ---\n");
 
             for (Transaction t : ledger.getAllTransactions()) {
                 if (t.getVendor().toLowerCase().contains(vendorSearch)) {
@@ -267,10 +278,10 @@ public class Main {
             }
 
             if (!found) {
-                System.out.println("No transactions found for vendor: " + vendorSearch);
-                System.out.println("Please try again.");
+                System.out.println("\nNo transactions found for vendor: " + vendorSearch);
+                System.out.println("\nPlease try again.");
             } else {
-                System.out.println("Search complete. Returning to Reports Menu...");
+                System.out.println("\nSearch complete. Returning to Reports Menu...\n");
                 return;
             }
         }
