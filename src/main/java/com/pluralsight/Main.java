@@ -162,7 +162,7 @@ public class Main {
                     showPreviousMonth(ledger);
                     break;
                 case "3":
-                    //showYearToDate(ledger);
+                    showYearToDate(ledger);
                     break;
                 case "4":
                     //showPreviousYear(ledger);
@@ -207,6 +207,21 @@ public class Main {
         //Filter and print transactions from the previous month
         for (Transaction t : ledger.getAllTransactions()) {
             if (t.getDate().getMonthValue() == prevMonth && t.getDate().getYear() == prevYear) {
+                System.out.println(t);
+            }
+        }
+    }
+    private static void showYearToDate(TransactionLedger ledger) {
+        System.out.println("\n--- Year To Date Transactions ---");
+
+        java.time.LocalDate today = java.time.LocalDate.now();
+        java.time.LocalDate startOfYear = java.time.LocalDate.of(today.getYear(), 1, 1);
+
+        for (Transaction t : ledger.getAllTransactions()) {
+            java.time.LocalDate transactionDate = t.getDate();
+
+            if ((transactionDate.isEqual(startOfYear) || transactionDate.isAfter(startOfYear)) &&
+                    (transactionDate.isEqual(today) || transactionDate.isBefore(today))) {
                 System.out.println(t);
             }
         }
