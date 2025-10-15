@@ -1,5 +1,7 @@
 package com.pluralsight;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -65,7 +67,7 @@ public class Main {
                     System.out.println("Payment added successfully!");
                     break;
                 case "L":
-                    // Show ledger
+                    showLedgerMenu(ledger, scanner);
                     break;
                 case "X":
                     running = false;
@@ -73,7 +75,60 @@ public class Main {
                 default:
                     System.out.println("Invalid option. Try again.");
             }
-        }
-        System.out.println("Thanks for choosing Tanner's Financial Ledger, Have a nice day!");
+        } System.out.println("Thanks for choosing Tanner's Financial Ledger, Have a nice day!");
     }
+
+    private static void showLedgerMenu(TransactionLedger ledger, Scanner scanner) {
+        boolean viewingLedger = true;
+
+        while (viewingLedger) {
+            System.out.println("\n==== Ledger Menu ====");
+            System.out.println("A) Show All Transactions");
+            System.out.println("D) Show Deposits Only");
+            System.out.println("P) Show Payments Only");
+            System.out.println("H) Home");
+            System.out.print("Choose an option: ");
+            String choice = scanner.nextLine().trim().toUpperCase();
+
+            // Get transactions in reverse order (newest first)
+            List<Transaction> allTransactions = new ArrayList<>(ledger.getAllTransactions());
+            java.util.Collections.reverse(allTransactions);
+
+            switch (choice) {
+                case "A":
+                    System.out.println("\n--- All Transactions ---");
+                    for (Transaction t : allTransactions) {
+                        System.out.println(t);
+                    }
+                    break;
+
+                case "D":
+                    System.out.println("\n--- Deposits Only ---");
+                    for (Transaction t : allTransactions) {
+                        if (t.getAmount() > 0) {
+                            System.out.println(t);
+                        }
+                    }
+                    break;
+
+                case "P":
+                    System.out.println("\n--- Payments Only ---");
+                    for (Transaction t : allTransactions) {
+                        if (t.getAmount() < 0) {
+                            System.out.println(t);
+                        }
+                    }
+                    break;
+
+                case "H":
+                    viewingLedger = false;
+                    break;
+
+                default:
+                    System.out.println("Invalid option. Try again.");
+            }
+        }
+    }
+
 }
+
