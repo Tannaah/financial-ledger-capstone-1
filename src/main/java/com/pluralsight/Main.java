@@ -19,6 +19,7 @@ public class Main {
             System.out.print("Choose an option: ");
             String choice = scanner.nextLine().trim().toUpperCase();
 
+            //todo make it look cleaner with Methods, (Reports Menu)
             switch (choice) {
                 case "D":
                     System.out.print("Enter description: ");
@@ -29,6 +30,7 @@ public class Main {
 
                     System.out.print("Enter amount: ");
                     double depositAmount = Double.parseDouble(scanner.nextLine());
+                    //todo fix error
 
                     Transaction deposit = new Transaction(
                             java.time.LocalDate.now(),
@@ -50,6 +52,7 @@ public class Main {
 
                     System.out.print("Enter amount: ");
                     double paymentAmount = Double.parseDouble(scanner.nextLine());
+                    //todo fix error
 
                     // Make sure the amount is stored as a negative value
                     if (paymentAmount > 0) {
@@ -156,7 +159,7 @@ public class Main {
                     showMonthToDate(ledger);
                     break;
                 case "2":
-                    //showPreviousMonth(ledger);
+                    showPreviousMonth(ledger);
                     break;
                 case "3":
                     //showYearToDate(ledger);
@@ -175,6 +178,7 @@ public class Main {
             }
         }
     }
+
     private static void showMonthToDate(TransactionLedger ledger) {
         System.out.println("\n--- Month To Date Transactions ---");
 
@@ -184,8 +188,25 @@ public class Main {
         List<Transaction> allTransactions = ledger.getAllTransactions();
 
         for (Transaction t : allTransactions) {
-            if (t.getDate().getYear() == currentYear &&
-                    t.getDate().getMonthValue() == currentMonth) {
+            if (t.getDate().getYear() == currentYear && t.getDate().getMonthValue() == currentMonth) {
+                System.out.println(t);
+            }
+        }
+    }
+
+    private static void showPreviousMonth(TransactionLedger ledger) {
+        System.out.println("\n--- Previous Month Transactions ---");
+
+        //Get current date and subtract one month
+        java.time.LocalDate today = java.time.LocalDate.now();
+        java.time.LocalDate previousMonthDate = today.minusMonths(1);
+
+        int prevMonth = previousMonthDate.getMonthValue();
+        int prevYear = previousMonthDate.getYear();
+
+        //Filter and print transactions from the previous month
+        for (Transaction t : ledger.getAllTransactions()) {
+            if (t.getDate().getMonthValue() == prevMonth && t.getDate().getYear() == prevYear) {
                 System.out.println(t);
             }
         }
