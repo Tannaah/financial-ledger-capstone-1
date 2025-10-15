@@ -168,7 +168,7 @@ public class Main {
                     showPreviousYear(ledger);
                     break;
                 case "5":
-                    //searchByVendor(ledger, scanner);
+                    searchByVendor(ledger, scanner);
                     break;
                 case "0":
                     viewingReports = false;
@@ -211,6 +211,7 @@ public class Main {
             }
         }
     }
+
     private static void showYearToDate(TransactionLedger ledger) {
         System.out.println("\n--- Year To Date Transactions ---");
 
@@ -242,6 +243,35 @@ public class Main {
             if ((transactionDate.isEqual(startOfPreviousYear) || transactionDate.isAfter(startOfPreviousYear)) &&
                     (transactionDate.isEqual(endOfPreviousYear) || transactionDate.isBefore(endOfPreviousYear))) {
                 System.out.println(t);
+            }
+        }
+    }
+
+    private static void searchByVendor(TransactionLedger ledger, Scanner scanner) {
+        while (true) {
+        System.out.print("\nEnter vendor name to search (Input 0 to return): ");
+        String vendorSearch = scanner.nextLine().trim().toLowerCase();
+
+            if (vendorSearch.equals("0")) {
+                return; // Goes back to Reports Menu
+            }
+
+            boolean found = false;
+            System.out.println("\n--- Transactions Matching Vendor: " + vendorSearch + " ---");
+
+            for (Transaction t : ledger.getAllTransactions()) {
+                if (t.getVendor().toLowerCase().contains(vendorSearch)) {
+                    System.out.println(t);
+                    found = true;
+                }
+            }
+
+            if (!found) {
+                System.out.println("No transactions found for vendor: " + vendorSearch);
+                System.out.println("Please try again.");
+            } else {
+                System.out.println("Search complete. Returning to Reports Menu...");
+                return;
             }
         }
     }
