@@ -23,7 +23,7 @@ public class Main {
             System.out.println("I) Add Team Income (Add Deposit)");
             System.out.println("E) Log Team Expense (Make Payment)");
             System.out.println("T) View Team Transactions (View Ledger)");
-            System.out.println("X) Exit Game");
+            System.out.println("X) Exit Game (Close Application)");
 
             String choice = ConsoleHelper.prompt("Choose a play: ").toUpperCase();
 
@@ -148,7 +148,7 @@ public class Main {
                     viewingLedger = false;
                     break;
                 default:
-                    System.out.println("Penalty! Invalid Entry, please try again and enter 'A', 'E', 'R', 'B'.");
+                    System.out.println("Penalty! Invalid Entry, please try again and enter either 'A', 'E', 'R' or 'B'.");
             }
         }
     }
@@ -163,7 +163,7 @@ public class Main {
             System.out.println("2) Previous Month");
             System.out.println("3) Year To Date");
             System.out.println("4) Previous Year");
-            System.out.println("5) Search by Vendor");
+            System.out.println("5) Search by Expense Vendor");
             System.out.println("6) Custom Search");
             System.out.println("0) Back to Team Transactions Menu");
 
@@ -253,7 +253,7 @@ public class Main {
     private static void searchByVendor(TransactionLedger ledger) {
 
         while (true) {
-            String vendorSearch = ConsoleHelper.prompt("Enter vendor name to search (Input 0 to return): ").toLowerCase();
+            String vendorSearch = ConsoleHelper.prompt("Enter Expense Vendor name to search (Input 0 to return): ").toLowerCase();
 
             if (vendorSearch.equals("0")) return;
 
@@ -267,10 +267,10 @@ public class Main {
                 }
             }
             if (!found) {
-                System.out.println("No transactions found for vendor: " + vendorSearch);
+                System.out.println("Fumble! No transactions found for vendor: " + vendorSearch);
                 System.out.println();  // Adds a blank line before the next prompt
             } else {
-                System.out.println("Search complete. Returning to Reports Menu...");
+                System.out.println("Score! Search complete. Returning to Reports Menu...");
                 return;
             }
         }
@@ -279,8 +279,8 @@ public class Main {
     private static void customSearch(TransactionLedger ledger) {
         System.out.println("\n--- Custom Search ---");
 
-        String startDateInput = ConsoleHelper.prompt("Start Date (yyyy-mm-dd, optional): ");
-        String endDateInput = ConsoleHelper.prompt("End Date (yyyy-mm-dd, optional): ");
+        String startDateInput = ConsoleHelper.prompt("Start Date (YYYY-MM-DD): ");
+        String endDateInput = ConsoleHelper.prompt("End Date (YYYY-MM-DD): ");
         String descriptionInput = ConsoleHelper.prompt("Description contains (optional): ").toLowerCase();
         String vendorInput = ConsoleHelper.prompt("Vendor contains (optional): ").toLowerCase();
         String amountInput = ConsoleHelper.prompt("Exact Amount (optional): ");
@@ -293,7 +293,7 @@ public class Main {
             if (!endDateInput.isEmpty()) endDate = LocalDate.parse(endDateInput);
             if (!amountInput.isEmpty()) amount = Double.parseDouble(amountInput);
         } catch (Exception e) {
-            System.out.println("Invalid input format. Please try again.");
+            System.out.println("Interception! Invalid input format. Please try again.");
             return;
         }
 

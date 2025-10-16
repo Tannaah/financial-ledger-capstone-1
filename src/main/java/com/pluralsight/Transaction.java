@@ -42,8 +42,14 @@ public class Transaction {
 
     @Override
     public String toString() {
-        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("hh:mm a"); // 12-hour format with AM/PM
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd"); // Format date nicely
+
         return String.format("%s | %s | %s | %s | %.2f",
-                date, time.format(timeFormatter), description, vendor, amount);
+                date.format(dateFormatter), // Format date
+                time.format(timeFormatter), // Format time to 12-hour
+                description,
+                vendor,
+                amount);
     }
 }
