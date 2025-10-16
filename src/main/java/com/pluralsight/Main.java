@@ -18,48 +18,49 @@ public class Main {
         boolean running = true;
 
         while (running) {
-            System.out.println("\n==== Home Menu ====");
-            System.out.println("D) Add Deposit");
-            System.out.println("P) Make a Payment (Debit)");
-            System.out.println("L) Ledger");
-            System.out.println("X) Exit");
+            System.out.println("\nWelcome to Tanner's Terrific team's Ledger Application!");
+            System.out.println("\n==== 🏈 Locker Room Menu 🏈 ====");
+            System.out.println("I) Add Team Income (Add Deposit)");
+            System.out.println("E) Log Team Expense (Make Payment)");
+            System.out.println("T) View Team Transactions (View Ledger)");
+            System.out.println("X) Exit Game");
 
-            String choice = ConsoleHelper.prompt("Choose an option: ").toUpperCase();
+            String choice = ConsoleHelper.prompt("Choose a play: ").toUpperCase();
 
             switch (choice) {
-                case "D":
+                case "I":
                     addDeposit(ledger);
                     break;
-                case "P":
+                case "E":
                     makePayment(ledger);
                     break;
-                case "L":
+                case "T":
                     showLedgerMenu(ledger);
                     break;
                 case "X":
                     running = false;
                     break;
                 default:
-                    System.out.println("Invalid input. Please try again.");
+                    System.out.println("Incomplete pass! Invalid Entry, please try again and enter either 'I', 'E', 'T', or 'X'.");
             }
         }
-        System.out.println("Thank you for choosing Tanner's Financial Ledger. Have a nice day!");
+        System.out.println("🏈 Game Over! Thanks for managing Tanner's Terrific team's finances.");
     }
 
     // ADD DEPOSIT
     private static void addDeposit(TransactionLedger ledger) {
         while (true) {
-            String description = ConsoleHelper.prompt("Enter deposit description (Input 0 to return): ");
+            String description = ConsoleHelper.prompt("Enter Income Description (e.g., Sponsorship) [0 to Return]: ");
             if (description.equals("0")) return;
 
-            String vendor = ConsoleHelper.prompt("Enter deposit vendor: ");
+            String vendor = ConsoleHelper.prompt("Enter Income Source (e.g., Sponsor Name): ");
 
             double amount;
             try {
-                amount = Double.parseDouble(ConsoleHelper.prompt("Enter deposit amount: "));
+                amount = Double.parseDouble(ConsoleHelper.prompt("Enter Income Amount: "));
             } catch (NumberFormatException e) {
-                System.out.println(); // Add this line to create a blank line
-                System.out.println("Invalid input. Please enter a number.");
+                System.out.println();
+                System.out.println("Flag on the play! Invalid Entry. Please try again.");
                 continue;
             }
 
@@ -72,31 +73,31 @@ public class Main {
             );
 
             ledger.addTransaction(deposit);
-            System.out.println("Deposit added successfully!\n");
+            System.out.println("Touchdown! Income Logged Successfully.\n");
         }
     }
 
     // MAKE PAYMENT
     private static void makePayment(TransactionLedger ledger) {
         while (true) {
-            String description = ConsoleHelper.prompt("Enter payment description (Input 0 to return): ");
+            String description = ConsoleHelper.prompt("Enter Expense Description (e.g., Travel) [0 to Return]: ");
             if (description.equals("0")) return;
 
-            String vendor = ConsoleHelper.prompt("Enter payment vendor: ");
+            String vendor = ConsoleHelper.prompt("Enter Expense Vendor or Source: ");
 
             double amount;
             try {
-                amount = Double.parseDouble(ConsoleHelper.prompt("Enter payment amount: "));
+                amount = Double.parseDouble(ConsoleHelper.prompt("Enter Expense Amount: "));
             } catch (NumberFormatException e) {
-                System.out.println(); // Adds a blank line before the error message
-                System.out.println("Invalid input. Please enter a number.");
+                System.out.println();
+                System.out.println("Flag on the play! Invalid number. Try again.");
                 continue;
             }
 
             if (amount > 0) amount *= -1;
 
             Transaction payment = new Transaction(
-                    java.time.LocalDate.now(),
+                    LocalDate.now(),
                     java.time.LocalTime.now(),
                     description,
                     vendor,
@@ -104,7 +105,7 @@ public class Main {
             );
 
             ledger.addTransaction(payment);
-            System.out.println("Payment added successfully!\n");
+            System.out.println("Expense logged. Good hustle!\n");
         }
     }
 
@@ -113,41 +114,41 @@ public class Main {
         boolean viewingLedger = true;
 
         while (viewingLedger) {
-            System.out.println("\n==== Ledger Menu ====");
+            System.out.println("\n==== 🗂️ Team Transactions Menu 🗂 ====");
             System.out.println("A) Show All Transactions");
-            System.out.println("D) Show Deposits Only");
-            System.out.println("P) Show Payments Only");
-            System.out.println("R) Show Reports");
-            System.out.println("H) Home");
+            System.out.println("I) Show Incomes Only (Show Deposits)");
+            System.out.println("E) Show Expenses Only (Show Payments)");
+            System.out.println("R) Team Finance Reports (Show Reports Menu)");
+            System.out.println("B) Back to Locker Room (Home Page)");
 
-            String choice = ConsoleHelper.prompt("Choose an option: ").toUpperCase();
+            String choice = ConsoleHelper.prompt("Select an option: ").toUpperCase();
 
             List<Transaction> allTransactions = new ArrayList<>(ledger.getAllTransactions());
             java.util.Collections.reverse(allTransactions);
 
             switch (choice) {
                 case "A":
-                    System.out.println("\n--- All Transactions ---");
+                    System.out.println("\n--- All Team Transactions ---");
                     for (Transaction t : allTransactions) System.out.println(t);
                     break;
-                case "D":
-                    System.out.println("\n--- Deposits Only ---");
+                case "I":
+                    System.out.println("\n--- Team Incomes ---");
                     for (Transaction t : allTransactions)
                         if (t.getAmount() > 0) System.out.println(t);
                     break;
-                case "P":
-                    System.out.println("\n--- Payments Only ---");
+                case "E":
+                    System.out.println("\n--- Team Expenses ---");
                     for (Transaction t : allTransactions)
                         if (t.getAmount() < 0) System.out.println(t);
                     break;
                 case "R":
                     showReportsMenu(ledger);
                     break;
-                case "H":
+                case "B":
                     viewingLedger = false;
                     break;
                 default:
-                    System.out.println("Invalid option. Try again.");
+                    System.out.println("Penalty! Invalid Entry, please try again and enter 'A', 'E', 'R', 'B'.");
             }
         }
     }
@@ -157,14 +158,14 @@ public class Main {
         boolean viewingReports = true;
 
         while (viewingReports) {
-            System.out.println("\n==== Reports Menu ====");
+            System.out.println("\n==== 📁 Team Finance Reports Menu 📁 ====");
             System.out.println("1) Month To Date");
             System.out.println("2) Previous Month");
             System.out.println("3) Year To Date");
             System.out.println("4) Previous Year");
             System.out.println("5) Search by Vendor");
             System.out.println("6) Custom Search");
-            System.out.println("0) Back to Ledger Menu");
+            System.out.println("0) Back to Team Transactions Menu");
 
             String choice = ConsoleHelper.prompt("Choose an option: ");
 
