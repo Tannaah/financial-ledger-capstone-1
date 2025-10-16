@@ -22,64 +22,71 @@ public class Main {
             //todo make it look cleaner with Methods, (Reports Menu)
             switch (choice) {
                 case "D":
-                    System.out.print("Enter description: ");
-                    String depositDescription = scanner.nextLine();
+                    while (true) {
+                        System.out.print("Enter description (Input 0 to return): ");
+                        String depositDescription = scanner.nextLine();
+                        if (depositDescription.equals("0")) break;
 
-                    System.out.print("Enter vendor: ");
-                    String depositVendor = scanner.nextLine();
+                        System.out.print("Enter vendor: ");
+                        String depositVendor = scanner.nextLine();
 
-                    System.out.print("Enter amount: ");
-                    double depositAmount;
-                    try {
-                        depositAmount = Double.parseDouble(scanner.nextLine());
-                    } catch (NumberFormatException e) {
-                        System.out.println("\nInvalid input. Please enter a number.");
-                        break;
+                        System.out.print("Enter amount: ");
+                        double depositAmount;
+                        try {
+                            depositAmount = Double.parseDouble(scanner.nextLine());
+                        } catch (NumberFormatException e) {
+                            System.out.println("\nInvalid input. Please enter a number.");
+                            continue;
+                        }
+
+
+                        Transaction deposit = new Transaction(
+                                java.time.LocalDate.now(),
+                                java.time.LocalTime.now(),
+                                depositDescription,
+                                depositVendor,
+                                depositAmount
+                        );
+                        ledger.addTransaction(deposit);
+                        System.out.println("Deposit added successfully!");
                     }
-
-                    Transaction deposit = new Transaction(
-                            java.time.LocalDate.now(),
-                            java.time.LocalTime.now(),
-                            depositDescription,
-                            depositVendor,
-                            depositAmount
-                    );
-                    ledger.addTransaction(deposit);
-                    System.out.println("Deposit added successfully!");
                     break;
 
                 case "P":
-                    System.out.print("Enter description: ");
-                    String paymentDescription = scanner.nextLine();
+                    while (true) {
+                        System.out.print("Enter description (Input 0 to return): ");
+                        String paymentDescription = scanner.nextLine();
+                        if (paymentDescription.equals("0")) break;
 
-                    System.out.print("Enter vendor: ");
-                    String paymentVendor = scanner.nextLine();
+                        System.out.print("Enter vendor: ");
+                        String paymentVendor = scanner.nextLine();
 
-                    System.out.print("Enter amount: ");
-                    double paymentAmount;
-                    try {
-                        paymentAmount = Double.parseDouble(scanner.nextLine());
-                    } catch (NumberFormatException e) {
-                        System.out.println("\nInvalid input. Please enter a number.");
-                        break;
+                        System.out.print("Enter amount: ");
+                        double paymentAmount;
+                        try {
+                            paymentAmount = Double.parseDouble(scanner.nextLine());
+                        } catch (NumberFormatException e) {
+                            System.out.println("\nInvalid input. Please enter a number.");
+                            continue;
+                        }
+
+                        // Make sure the amount is stored as a negative value
+                        if (paymentAmount > 0) {
+                            paymentAmount *= -1;
+                        }
+                        Transaction payment = new Transaction(
+                                java.time.LocalDate.now(),
+                                java.time.LocalTime.now(),
+                                paymentDescription,
+                                paymentVendor,
+                                paymentAmount
+                        );
+
+                        ledger.addTransaction(payment);
+                        System.out.println("Payment added successfully!");
                     }
-                    //todo fix error
-
-                    // Make sure the amount is stored as a negative value
-                    if (paymentAmount > 0) {
-                        paymentAmount *= -1;
-                    }
-                    Transaction payment = new Transaction(
-                            java.time.LocalDate.now(),
-                            java.time.LocalTime.now(),
-                            paymentDescription,
-                            paymentVendor,
-                            paymentAmount
-                    );
-
-                    ledger.addTransaction(payment);
-                    System.out.println("Payment added successfully!");
                     break;
+
                 case "L":
                     showLedgerMenu(ledger, scanner);
                     break;
