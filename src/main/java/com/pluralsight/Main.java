@@ -3,22 +3,20 @@ package com.pluralsight;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        TransactionLedger ledger = new TransactionLedger();
+        TransactionLedger ledger = new TransactionLedger(); // Ledger to hold all transactions
 
-        showHomeMenu(ledger);
-
+        showHomeMenu(ledger); // Start main menu loop
     }
-    // HOME MENU
+
+    // HOME MENU - Main navigation screen for user interaction
     private static void showHomeMenu(TransactionLedger ledger) {
         boolean running = true;
 
         while (running) {
-            System.out.println("\nWelcome to Tanner's Terrific team's Ledger Application!");
+            System.out.println("\nWelcome to Tanner's Terrific Football team's Ledger Application!");
             System.out.println("\n==== 🏈 Locker Room Menu 🏈 ====");
             System.out.println("I) Add Team Income (Add Deposit)");
             System.out.println("E) Log Team Expense (Make Payment)");
@@ -29,16 +27,16 @@ public class Main {
 
             switch (choice) {
                 case "I":
-                    addDeposit(ledger);
+                    addDeposit(ledger); // Add a positive income transaction
                     break;
                 case "E":
-                    makePayment(ledger);
+                    makePayment(ledger); // Add a negative expense transaction
                     break;
                 case "T":
-                    showLedgerMenu(ledger);
+                    showLedgerMenu(ledger); // Navigate to transaction viewing options
                     break;
                 case "X":
-                    running = false;
+                    running = false; // Exit the application loop
                     break;
                 default:
                     System.out.println("Incomplete pass! Invalid Entry, please try again and enter either 'I', 'E', 'T', or 'X'.");
@@ -47,11 +45,11 @@ public class Main {
         System.out.println("🏈 Game Over! Thanks for managing Tanner's Terrific team's finances.");
     }
 
-    // ADD DEPOSIT
+    // ADD DEPOSIT - Handles adding a new income transaction
     private static void addDeposit(TransactionLedger ledger) {
         while (true) {
             String description = ConsoleHelper.prompt("Enter Income Description (e.g., Sponsorship) [0 to Return]: ");
-            if (description.equals("0")) return;
+            if (description.equals("0")) return; // Allow user to go back
 
             String vendor = ConsoleHelper.prompt("Enter Income Source (e.g., Sponsor Name): ");
 
@@ -61,9 +59,10 @@ public class Main {
             } catch (NumberFormatException e) {
                 System.out.println();
                 System.out.println("Flag on the play! Invalid Entry. Please try again.");
-                continue;
+                continue; // Retry on invalid input
             }
 
+            // Create deposit transaction with current date/time
             Transaction deposit = new Transaction(
                     LocalDate.now(),
                     java.time.LocalTime.now(),
@@ -72,16 +71,16 @@ public class Main {
                     amount
             );
 
-            ledger.addTransaction(deposit);
+            ledger.addTransaction(deposit); // Add to ledger
             System.out.println("Touchdown! Income Logged Successfully.\n");
         }
     }
 
-    // MAKE PAYMENT
+    // MAKE PAYMENT - Handles adding a new expense transaction
     private static void makePayment(TransactionLedger ledger) {
         while (true) {
             String description = ConsoleHelper.prompt("Enter Expense Description (e.g., Travel) [0 to Return]: ");
-            if (description.equals("0")) return;
+            if (description.equals("0")) return; // Return to menu
 
             String vendor = ConsoleHelper.prompt("Enter Expense Vendor or Source: ");
 
@@ -91,11 +90,12 @@ public class Main {
             } catch (NumberFormatException e) {
                 System.out.println();
                 System.out.println("Flag on the play! Invalid number. Try again.");
-                continue;
+                continue; // Retry input
             }
 
-            if (amount > 0) amount *= -1;
+            if (amount > 0) amount *= -1; // Expenses stored as negative amounts
 
+            // Create expense transaction with current date/time
             Transaction payment = new Transaction(
                     LocalDate.now(),
                     java.time.LocalTime.now(),
@@ -104,12 +104,12 @@ public class Main {
                     amount
             );
 
-            ledger.addTransaction(payment);
+            ledger.addTransaction(payment); // Add to ledger
             System.out.println("Expense logged. Good hustle!\n");
         }
     }
 
-    // LEDGER MENU
+    // LEDGER MENU - Allows user to view transactions filtered by type or reports
     private static void showLedgerMenu(TransactionLedger ledger) {
         boolean viewingLedger = true;
 
@@ -123,6 +123,7 @@ public class Main {
 
             String choice = ConsoleHelper.prompt("Select an option: ").toUpperCase();
 
+            // Copy and reverse list to show most recent first
             List<Transaction> allTransactions = new ArrayList<>(ledger.getAllTransactions());
             java.util.Collections.reverse(allTransactions);
 
@@ -142,10 +143,10 @@ public class Main {
                         if (t.getAmount() < 0) System.out.println(t);
                     break;
                 case "R":
-                    showReportsMenu(ledger);
+                    showReportsMenu(ledger); // Navigate to reports options
                     break;
                 case "B":
-                    viewingLedger = false;
+                    viewingLedger = false; // Return to home menu
                     break;
                 default:
                     System.out.println("Penalty! Invalid Entry, please try again and enter either 'A', 'E', 'R' or 'B'.");
@@ -153,7 +154,7 @@ public class Main {
         }
     }
 
-    // REPORTS MENU
+    // REPORTS MENU - Provides various pre-built reports and search options
     private static void showReportsMenu(TransactionLedger ledger) {
         boolean viewingReports = true;
 
@@ -189,7 +190,7 @@ public class Main {
                     customSearch(ledger);
                     break;
                 case "0":
-                    viewingReports = false;
+                    viewingReports = false; // Return to ledger menu
                     break;
                 default:
                     System.out.println("Invalid option. Try again.");
@@ -197,7 +198,7 @@ public class Main {
         }
     }
 
-    // REPORT: Month to Date
+    // REPORT: Month to Date - Lists transactions for the current month
     private static void showMonthToDate(TransactionLedger ledger) {
         System.out.println("\n--- Month To Date Transactions ---");
         int currentYear = java.time.LocalDate.now().getYear();
@@ -210,7 +211,7 @@ public class Main {
         }
     }
 
-    // REPORT: Previous Month
+    // REPORT: Previous Month - Lists transactions for the last month
     private static void showPreviousMonth(TransactionLedger ledger) {
         System.out.println("\n--- Previous Month Transactions ---");
         java.time.LocalDate today = java.time.LocalDate.now();
@@ -224,7 +225,7 @@ public class Main {
         }
     }
 
-    // REPORT: Year to Date
+    // REPORT: Year to Date - Lists transactions from Jan 1 of current year to today
     private static void showYearToDate(TransactionLedger ledger) {
         System.out.println("\n--- Year To Date Transactions ---");
         java.time.LocalDate today = java.time.LocalDate.now();
@@ -237,7 +238,7 @@ public class Main {
         }
     }
 
-    // REPORT: Previous Year
+    // REPORT: Previous Year - Lists transactions for the entire last year
     private static void showPreviousYear(TransactionLedger ledger) {
         System.out.println("\n--- Previous Year Transactions ---");
         int previousYear = java.time.LocalDate.now().getYear() - 1;
@@ -249,13 +250,13 @@ public class Main {
         }
     }
 
-    // REPORT: Search by Vendor
+    // REPORT: Search by Vendor - Finds transactions by matching vendor name
     private static void searchByVendor(TransactionLedger ledger) {
 
         while (true) {
             String vendorSearch = ConsoleHelper.prompt("Enter Expense Vendor name to search (Input 0 to return): ").toLowerCase();
 
-            if (vendorSearch.equals("0")) return;
+            if (vendorSearch.equals("0")) return; // Exit search
 
             boolean found = false;
             System.out.println("\n--- Transactions Matching Vendor: " + vendorSearch + " ---");
@@ -268,14 +269,15 @@ public class Main {
             }
             if (!found) {
                 System.out.println("Fumble! No transactions found for vendor: " + vendorSearch);
-                System.out.println();  // Adds a blank line before the next prompt
+                System.out.println();  // Adds a blank line before next prompt
             } else {
                 System.out.println("Score! Search complete. Returning to Reports Menu...");
                 return;
             }
         }
     }
-    // REPORT: Custom Search
+
+    // REPORT: Custom Search - Allows filtering transactions by date, description, vendor, amount
     private static void customSearch(TransactionLedger ledger) {
         System.out.println("\n--- Custom Search ---");
 
