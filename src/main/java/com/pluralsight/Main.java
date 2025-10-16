@@ -1,5 +1,6 @@
 package com.pluralsight;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -10,6 +11,7 @@ public class Main {
         TransactionLedger ledger = new TransactionLedger();
 
         showHomeMenu(ledger, scanner);
+
     }
     // HOME MENU
     private static void showHomeMenu(TransactionLedger ledger, Scanner scanner) {
@@ -40,8 +42,8 @@ public class Main {
                 default:
                     System.out.println("Invalid input. Please try again.");
             }
-            System.out.println("Thanks for choosing Tanner's Financial Ledger. Have a nice day!");
         }
+        System.out.println("Thank you for choosing Tanner's Financial Ledger. Have a nice day!");
     }
 
     // ADD DEPOSIT
@@ -62,7 +64,7 @@ public class Main {
             }
 
             Transaction deposit = new Transaction(
-                    java.time.LocalDate.now(),
+                    LocalDate.now(),
                     java.time.LocalTime.now(),
                     description,
                     vendor,
@@ -161,6 +163,7 @@ public class Main {
             System.out.println("3) Year To Date");
             System.out.println("4) Previous Year");
             System.out.println("5) Search by Vendor");
+            System.out.println("6) Custom Search");
             System.out.println("0) Back to Ledger Menu");
 
             String choice = ConsoleHelper.prompt("Choose an option: ");
@@ -180,6 +183,9 @@ public class Main {
                     break;
                 case "5":
                     searchByVendor(ledger);
+                    break;
+                case "6":
+                    customSearch(ledger);
                     break;
                 case "0":
                     viewingReports = false;
@@ -258,13 +264,57 @@ public class Main {
                     found = true;
                 }
             }
-
             if (!found) {
                 System.out.println("No transactions found for vendor: " + vendorSearch);
                 System.out.println();  // Adds a blank line before the next prompt
             } else {
                 System.out.println("Search complete. Returning to Reports Menu...");
                 return;
+            }
+        }
+    }
+    private static void customSearch(TransactionLedger ledger) {
+        System.out.println("\n--- Custom Search ---");
+
+        String startDateInput = ConsoleHelper.prompt("Start Date (yyyy-mm-dd, optional): ").trim();
+        String endDateInput = ConsoleHelper.prompt("End Date (yyyy-mm-dd, optional): ").trim();
+        String descriptionInput = ConsoleHelper.prompt("Description contains (optional): ").trim().toLowerCase();
+        String vendorInput = ConsoleHelper.prompt("Vendor contains (optional): ").trim().toLowerCase();
+        String amountInput = ConsoleHelper.prompt("Exact Amount (optional): ").trim();
+
+        LocalDate startDate = null, endDate = null;
+        Double amount = null;
+
+        try {
+            if (!startDateInput.isEmpty()) startDate = LocalDate.parse(startDateInput);
+            if (!endDateInput.isEmpty()) endDate = LocalDate.parse(endDateInput);
+            if (!amountInput.isEmpty()) amount = Double.parseDouble(amountInput);
+        } catch (Exception e) {
+            System.out.println("Invalid input format. Please try again.");
+            return;
+        }
+
+        List<Transaction> allTransactions = ledger.getAllTransactions();
+        List<Transaction> filtered = new ArrayList<>();
+
+        for (Transaction t : allTransactions) {
+            boolean match = true;
+
+            if (startDate != null && t.getDate().isBefore(startDate)) match = false;
+            if (endDate != null && t.getDate().isAfter(endDate)) match = false;
+            if (!descriptionInput.isEmpty() && !t.getDescription().toLowerCase().contains(descriptionInput)) match = false;
+            if (!vendorInput.isEmpty() && !t.getVendor().toLowerCase().contains(vendorInput)) match = false;
+            if (amount != null && t.getAmount() != amount) match = false;
+
+            if (match) filtered.add(t);
+        }
+
+        if (filtered.isEmpty()) {
+            System.out.println("No transactions match your search criteria.");
+        } else {
+            System.out.println("\n--- Search Results ---");
+            for (Transaction t : filtered) {
+                System.out.println(t);
             }
         }
     }
