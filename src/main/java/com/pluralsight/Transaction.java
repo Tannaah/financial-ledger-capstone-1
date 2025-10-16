@@ -43,7 +43,7 @@ public class Transaction {
     @Override
     public String toString() {
         DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
-        return String.format("%s|%s|%s|%s|%.2f",
+        return String.format("%s | %s | %s | %s | %.2f",
                 date, time.format(timeFormatter), description, vendor, amount);
     }
 }

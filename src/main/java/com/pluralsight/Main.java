@@ -10,11 +10,11 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         TransactionLedger ledger = new TransactionLedger();
 
-        showHomeMenu(ledger, scanner);
+        showHomeMenu(ledger);
 
     }
     // HOME MENU
-    private static void showHomeMenu(TransactionLedger ledger, Scanner scanner) {
+    private static void showHomeMenu(TransactionLedger ledger) {
         boolean running = true;
 
         while (running) {
@@ -34,7 +34,7 @@ public class Main {
                     makePayment(ledger);
                     break;
                 case "L":
-                    showLedgerMenu(ledger, scanner);
+                    showLedgerMenu(ledger);
                     break;
                 case "X":
                     running = false;
@@ -49,14 +49,14 @@ public class Main {
     // ADD DEPOSIT
     private static void addDeposit(TransactionLedger ledger) {
         while (true) {
-            String description = ConsoleHelper.prompt("Enter description (Input 0 to return): ");
+            String description = ConsoleHelper.prompt("Enter deposit description (Input 0 to return): ");
             if (description.equals("0")) return;
 
-            String vendor = ConsoleHelper.prompt("Enter vendor: ");
+            String vendor = ConsoleHelper.prompt("Enter deposit vendor: ");
 
             double amount;
             try {
-                amount = Double.parseDouble(ConsoleHelper.prompt("Enter amount: "));
+                amount = Double.parseDouble(ConsoleHelper.prompt("Enter deposit amount: "));
             } catch (NumberFormatException e) {
                 System.out.println(); // Add this line to create a blank line
                 System.out.println("Invalid input. Please enter a number.");
@@ -72,21 +72,21 @@ public class Main {
             );
 
             ledger.addTransaction(deposit);
-            System.out.println("Deposit added successfully!");
+            System.out.println("Deposit added successfully!\n");
         }
     }
 
     // MAKE PAYMENT
     private static void makePayment(TransactionLedger ledger) {
         while (true) {
-            String description = ConsoleHelper.prompt("Enter description (Input 0 to return): ");
+            String description = ConsoleHelper.prompt("Enter payment description (Input 0 to return): ");
             if (description.equals("0")) return;
 
-            String vendor = ConsoleHelper.prompt("Enter vendor: ");
+            String vendor = ConsoleHelper.prompt("Enter payment vendor: ");
 
             double amount;
             try {
-                amount = Double.parseDouble(ConsoleHelper.prompt("Enter amount: "));
+                amount = Double.parseDouble(ConsoleHelper.prompt("Enter payment amount: "));
             } catch (NumberFormatException e) {
                 System.out.println(); // Adds a blank line before the error message
                 System.out.println("Invalid input. Please enter a number.");
@@ -104,12 +104,12 @@ public class Main {
             );
 
             ledger.addTransaction(payment);
-            System.out.println("Payment added successfully!");
+            System.out.println("Payment added successfully!\n");
         }
     }
 
     // LEDGER MENU
-    private static void showLedgerMenu(TransactionLedger ledger, Scanner scanner) {
+    private static void showLedgerMenu(TransactionLedger ledger) {
         boolean viewingLedger = true;
 
         while (viewingLedger) {
@@ -250,6 +250,7 @@ public class Main {
 
     // REPORT: Search by Vendor
     private static void searchByVendor(TransactionLedger ledger) {
+
         while (true) {
             String vendorSearch = ConsoleHelper.prompt("Enter vendor name to search (Input 0 to return): ").toLowerCase();
 
@@ -273,14 +274,15 @@ public class Main {
             }
         }
     }
+    // REPORT: Custom Search
     private static void customSearch(TransactionLedger ledger) {
         System.out.println("\n--- Custom Search ---");
 
-        String startDateInput = ConsoleHelper.prompt("Start Date (yyyy-mm-dd, optional): ").trim();
-        String endDateInput = ConsoleHelper.prompt("End Date (yyyy-mm-dd, optional): ").trim();
-        String descriptionInput = ConsoleHelper.prompt("Description contains (optional): ").trim().toLowerCase();
-        String vendorInput = ConsoleHelper.prompt("Vendor contains (optional): ").trim().toLowerCase();
-        String amountInput = ConsoleHelper.prompt("Exact Amount (optional): ").trim();
+        String startDateInput = ConsoleHelper.prompt("Start Date (yyyy-mm-dd, optional): ");
+        String endDateInput = ConsoleHelper.prompt("End Date (yyyy-mm-dd, optional): ");
+        String descriptionInput = ConsoleHelper.prompt("Description contains (optional): ").toLowerCase();
+        String vendorInput = ConsoleHelper.prompt("Vendor contains (optional): ").toLowerCase();
+        String amountInput = ConsoleHelper.prompt("Exact Amount (optional): ");
 
         LocalDate startDate = null, endDate = null;
         Double amount = null;
