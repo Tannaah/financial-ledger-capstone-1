@@ -10,14 +10,8 @@
 ## Main Class: Reports Menu (Team Finance Reports Menu)
 <img width="1211" height="928" alt="Screen Shot 2025-10-16 at 23 54 50 PM" src="https://github.com/user-attachments/assets/c8522cc7-c22e-4a75-83d8-cc889b20bf37" />
 
-
-
-
-
-
-
-
-
+## Main Class: Cunstom Search Option under Reports Menu (Team Finance Reports Menu)
+<img width="1043" height="938" alt="Screen Shot 2025-10-16 at 23 56 36 PM" src="https://github.com/user-attachments/assets/f34244b4-55bc-4ca8-a3e3-ee76eb1a2bdc" />
 
 
 
