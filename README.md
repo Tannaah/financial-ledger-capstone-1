@@ -7,7 +7,8 @@
 ## Main Class: Ledger Menu (Team Transactions Menu)
 <img width="1069" height="928" alt="Screen Shot 2025-10-16 at 23 53 06 PM" src="https://github.com/user-attachments/assets/a490688f-1200-4bf9-97ba-6fa85063e63a" />
 
-
+## Main Class: Reports Menu (Team Finance Reports Menu)
+<img width="1211" height="928" alt="Screen Shot 2025-10-16 at 23 54 50 PM" src="https://github.com/user-attachments/assets/c8522cc7-c22e-4a75-83d8-cc889b20bf37" />
 
 
 
