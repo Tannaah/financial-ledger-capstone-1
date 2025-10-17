@@ -19,6 +19,9 @@
 ## TransactionLedger.java Class:
 <img width="815" height="1012" alt="Screen Shot 2025-10-17 at 00 00 45 AM" src="https://github.com/user-attachments/assets/fd750ad8-6a76-403d-8211-b964ecf022fd" />
 
+## ConsoleHelper Class:
+<img width="1115" height="677" alt="Screen Shot 2025-10-17 at 00 02 06 AM" src="https://github.com/user-attachments/assets/f63214b1-63e7-4903-ba60-1a8b174956d1" />
+
 
 
 #### Created by Tanner Hodges
