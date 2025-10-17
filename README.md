@@ -22,6 +22,8 @@
 ## ConsoleHelper Class:
 <img width="1115" height="677" alt="Screen Shot 2025-10-17 at 00 02 06 AM" src="https://github.com/user-attachments/assets/f63214b1-63e7-4903-ba60-1a8b174956d1" />
 
+## transactions.csv File
+<img width="1154" height="896" alt="Screen Shot 2025-10-17 at 00 03 35 AM" src="https://github.com/user-attachments/assets/539b8e7a-c4ac-4b27-a1cc-837af24502d0" />
 
 
 #### Created by Tanner Hodges
