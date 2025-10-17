@@ -1,5 +1,5 @@
-# $ Financial Ledger App $
-#### In this Financial Ledger Application, it will help you track your financial transactions like deposits and payments for personal or business use. All transactions are saved to a file named `transactions.csv`. (Made using the Java language.)
+# $ Tanner's Terrific Football team's Ledger Application! $
+#### Tanner's Terrific Football Team's Ledger Application is a console-based finance tracker designed to help manage the team’s income and expenses. It allows users to log transactions, view reports, and search through financial data — making it easy to keep track of sponsorships, team purchases, bonuses, and more, all in one place. (Made using the Java language.)
 
 
 
