@@ -107,7 +107,7 @@ public class Main {
                     amount
             );
 
-            ledger.addTransaction(payment); // Add to ledger
+            ledger.addTransaction(payment);
             System.out.println(RESET + "Expense logged. Good hustle!\n");
         }
     }
