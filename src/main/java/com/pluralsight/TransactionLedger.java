@@ -35,8 +35,9 @@ public class TransactionLedger {
                 String[] parts = line.split("\\|");
 
                 if (parts.length == 5) {
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("hh:mm:ss a");
                     LocalDate date = LocalDate.parse(parts[0]);
-                    LocalTime time = LocalTime.parse(parts[1]);
+                    LocalTime time = LocalTime.parse(parts[1], formatter);
                     String description = parts[2];
                     String vendor = parts[3];
                     double amount = Double.parseDouble(parts[4]);

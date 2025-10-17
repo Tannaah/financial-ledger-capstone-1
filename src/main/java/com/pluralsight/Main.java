@@ -7,23 +7,26 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) {
         TransactionLedger ledger = new TransactionLedger(); // Ledger to hold all transactions
-
         showHomeMenu(ledger); // Start main menu loop
     }
+
+    private static final String RESET = "\u001B[0m";
+    private static final String GOLD = "\u001B[33m";
+    private static final String DARK_GREEN = "\u001B[32m";
 
     // HOME MENU - Main navigation screen for user interaction
     private static void showHomeMenu(TransactionLedger ledger) {
         boolean running = true;
 
         while (running) {
-            System.out.println("\nWelcome to Tanner's Terrific Football team's Ledger Application!");
-            System.out.println("\n==== 🏈 Locker Room Menu 🏈 ====");
-            System.out.println("I) Add Team Income (Add Deposit)");
+            System.out.println("\n" + GOLD + "Welcome to Tanner's Terrific Football team's Ledger Application!");
+            System.out.println("\n" + GOLD + "==== 🏈 Locker Room Menu 🏈 ====");
+            System.out.println(DARK_GREEN + "I) Add Team Income (Add Deposit)");
             System.out.println("E) Log Team Expense (Make Payment)");
             System.out.println("T) View Team Transactions (View Ledger)");
-            System.out.println("X) Exit Game (Close Application)");
+            System.out.println("X) Exit Game (Close Application)" + RESET);
 
-            String choice = ConsoleHelper.prompt("Choose a play: ").toUpperCase();
+            String choice = ConsoleHelper.prompt(GOLD + "Choose a play: ").toUpperCase();
 
             switch (choice) {
                 case "I":
@@ -39,26 +42,26 @@ public class Main {
                     running = false; // Exit the application loop
                     break;
                 default:
-                    System.out.println("Incomplete pass! Invalid Entry, please try again and enter either 'I', 'E', 'T', or 'X'.");
+                    System.out.println(RESET + "Incomplete pass! Invalid Entry, please try again and enter either 'I', 'E', 'T', or 'X'.");
             }
         }
-        System.out.println("🏈 Game Over! Thanks for managing Tanner's Terrific team's finances.");
+        System.out.println(RESET + "🏈 Game Over! Thanks for managing Tanner's Terrific team's finances. 🏈");
     }
 
     // ADD DEPOSIT - Handles adding a new income transaction
     private static void addDeposit(TransactionLedger ledger) {
         while (true) {
-            String description = ConsoleHelper.prompt("Enter Income Description (e.g., Sponsorship) [0 to Return]: ");
+            String description = ConsoleHelper.prompt(GOLD + "Enter Income Description (e.g., Sponsorship) [0 to Return]: ");
             if (description.equals("0")) return; // Allow user to go back
 
-            String vendor = ConsoleHelper.prompt("Enter Income Source (e.g., Sponsor Name): ");
+            String vendor = ConsoleHelper.prompt(GOLD + "Enter Income Source (e.g., Sponsor Name): ");
 
             double amount;
             try {
-                amount = Double.parseDouble(ConsoleHelper.prompt("Enter Income Amount: "));
+                amount = Double.parseDouble(ConsoleHelper.prompt(GOLD + "Enter Income Amount: "));
             } catch (NumberFormatException e) {
                 System.out.println();
-                System.out.println("Flag on the play! Invalid Entry. Please try again.");
+                System.out.println(RESET + "Flag on the play! Invalid Entry. Please try again.");
                 continue; // Retry on invalid input
             }
 
@@ -72,24 +75,24 @@ public class Main {
             );
 
             ledger.addTransaction(deposit); // Add to ledger
-            System.out.println("Touchdown! Income Logged Successfully.\n");
+            System.out.println(RESET + "Touchdown! Income Logged Successfully.\n");
         }
     }
 
     // MAKE PAYMENT - Handles adding a new expense transaction
     private static void makePayment(TransactionLedger ledger) {
         while (true) {
-            String description = ConsoleHelper.prompt("Enter Expense Description (e.g., Travel) [0 to Return]: ");
+            String description = ConsoleHelper.prompt(GOLD + "Enter Expense Description (e.g., Travel) [0 to Return]: ");
             if (description.equals("0")) return; // Return to menu
 
-            String vendor = ConsoleHelper.prompt("Enter Expense Vendor or Source: ");
+            String vendor = ConsoleHelper.prompt(GOLD + "Enter Expense Vendor or Source: ");
 
             double amount;
             try {
-                amount = Double.parseDouble(ConsoleHelper.prompt("Enter Expense Amount: "));
+                amount = Double.parseDouble(ConsoleHelper.prompt(GOLD + "Enter Expense Amount: "));
             } catch (NumberFormatException e) {
                 System.out.println();
-                System.out.println("Flag on the play! Invalid number. Try again.");
+                System.out.println(RESET + "Flag on the play! Invalid number. Try again.");
                 continue; // Retry input
             }
 
@@ -105,7 +108,7 @@ public class Main {
             );
 
             ledger.addTransaction(payment); // Add to ledger
-            System.out.println("Expense logged. Good hustle!\n");
+            System.out.println(RESET + "Expense logged. Good hustle!\n");
         }
     }
 
@@ -114,14 +117,14 @@ public class Main {
         boolean viewingLedger = true;
 
         while (viewingLedger) {
-            System.out.println("\n==== 🗂️ Team Transactions Menu 🗂 ====");
-            System.out.println("A) Show All Transactions");
-            System.out.println("I) Show Incomes Only (Show Deposits)");
-            System.out.println("E) Show Expenses Only (Show Payments)");
-            System.out.println("R) Team Finance Reports (Show Reports Menu)");
-            System.out.println("B) Back to Locker Room (Home Page)");
+            System.out.println("\n" + GOLD + "==== 🗂️ Team Transactions Menu 🗂 ====" + RESET);
+            System.out.println(DARK_GREEN + "A) Show All Transactions");
+            System.out.println(DARK_GREEN + "I) Show Incomes Only (Show Deposits)");
+            System.out.println(DARK_GREEN + "E) Show Expenses Only (Show Payments)");
+            System.out.println(DARK_GREEN + "R) Team Finance Reports (Show Reports Menu)");
+            System.out.println(DARK_GREEN + "B) Back to Locker Room (Home Page)");
 
-            String choice = ConsoleHelper.prompt("Select an option: ").toUpperCase();
+            String choice = ConsoleHelper.prompt(GOLD + "Select an option: ").toUpperCase();
 
             // Copy and reverse list to show most recent first
             List<Transaction> allTransactions = new ArrayList<>(ledger.getAllTransactions());
@@ -129,16 +132,16 @@ public class Main {
 
             switch (choice) {
                 case "A":
-                    System.out.println("\n--- All Team Transactions ---");
+                    System.out.println(GOLD + "\n--- All Team Transactions ---" + RESET);
                     for (Transaction t : allTransactions) System.out.println(t);
                     break;
                 case "I":
-                    System.out.println("\n--- Team Incomes ---");
+                    System.out.println(GOLD + "\n--- Team Incomes ---" + RESET);
                     for (Transaction t : allTransactions)
                         if (t.getAmount() > 0) System.out.println(t);
                     break;
                 case "E":
-                    System.out.println("\n--- Team Expenses ---");
+                    System.out.println(GOLD + "\n--- Team Expenses ---" + RESET);
                     for (Transaction t : allTransactions)
                         if (t.getAmount() < 0) System.out.println(t);
                     break;
@@ -149,7 +152,7 @@ public class Main {
                     viewingLedger = false; // Return to home menu
                     break;
                 default:
-                    System.out.println("Penalty! Invalid Entry, please try again and enter either 'A', 'E', 'R' or 'B'.");
+                    System.out.println(RESET + "Penalty! Invalid Entry. Please try again and enter either 'A', 'E', 'R' or 'B'.");
             }
         }
     }
@@ -159,16 +162,16 @@ public class Main {
         boolean viewingReports = true;
 
         while (viewingReports) {
-            System.out.println("\n==== 📁 Team Finance Reports Menu 📁 ====");
-            System.out.println("1) Month To Date");
+            System.out.println("\n" + GOLD + "==== 📁 Team Finance Reports Menu 📁 ====");
+            System.out.println(DARK_GREEN + "1) Month To Date");
             System.out.println("2) Previous Month");
             System.out.println("3) Year To Date");
             System.out.println("4) Previous Year");
             System.out.println("5) Search by Expense Vendor");
             System.out.println("6) Custom Search");
-            System.out.println("0) Back to Team Transactions Menu");
+            System.out.println("0) Back to Team Transactions Menu" + RESET);
 
-            String choice = ConsoleHelper.prompt("Choose an option: ");
+            String choice = ConsoleHelper.prompt(GOLD + "Choose an option: ");
 
             switch (choice) {
                 case "1":
@@ -193,14 +196,14 @@ public class Main {
                     viewingReports = false; // Return to ledger menu
                     break;
                 default:
-                    System.out.println("Invalid option. Try again.");
+                    System.out.println(RESET + "Offsides! Invalid Entry. Please try again and enter either '1', '2', '3', '4', '5', '6', or '0'");
             }
         }
     }
 
     // REPORT: Month to Date - Lists transactions for the current month
     private static void showMonthToDate(TransactionLedger ledger) {
-        System.out.println("\n--- Month To Date Transactions ---");
+        System.out.println("\n" + GOLD + "--- Month To Date Transactions ---" + RESET);
         int currentYear = java.time.LocalDate.now().getYear();
         int currentMonth = java.time.LocalDate.now().getMonthValue();
 
@@ -213,7 +216,7 @@ public class Main {
 
     // REPORT: Previous Month - Lists transactions for the last month
     private static void showPreviousMonth(TransactionLedger ledger) {
-        System.out.println("\n--- Previous Month Transactions ---");
+        System.out.println("\n" + GOLD + "--- Previous Month Transactions ---" + RESET);
         java.time.LocalDate today = java.time.LocalDate.now();
         java.time.LocalDate previousMonth = today.minusMonths(1);
 
@@ -227,7 +230,7 @@ public class Main {
 
     // REPORT: Year to Date - Lists transactions from Jan 1 of current year to today
     private static void showYearToDate(TransactionLedger ledger) {
-        System.out.println("\n--- Year To Date Transactions ---");
+        System.out.println("\n"  + GOLD + "--- Year To Date Transactions ---" + RESET);
         java.time.LocalDate today = java.time.LocalDate.now();
         java.time.LocalDate startOfYear = java.time.LocalDate.of(today.getYear(), 1, 1);
 
@@ -240,7 +243,7 @@ public class Main {
 
     // REPORT: Previous Year - Lists transactions for the entire last year
     private static void showPreviousYear(TransactionLedger ledger) {
-        System.out.println("\n--- Previous Year Transactions ---");
+        System.out.println("\n-"  + GOLD + "-- Previous Year Transactions ---" + RESET);
         int previousYear = java.time.LocalDate.now().getYear() - 1;
 
         for (Transaction t : ledger.getAllTransactions()) {
@@ -254,12 +257,12 @@ public class Main {
     private static void searchByVendor(TransactionLedger ledger) {
 
         while (true) {
-            String vendorSearch = ConsoleHelper.prompt("Enter Expense Vendor name to search (Input 0 to return): ").toLowerCase();
+            String vendorSearch = ConsoleHelper.prompt(GOLD + "Enter Expense Vendor name to search (Input 0 to return): ").toLowerCase();
 
             if (vendorSearch.equals("0")) return; // Exit search
 
             boolean found = false;
-            System.out.println("\n--- Transactions Matching Vendor: " + vendorSearch + " ---");
+            System.out.println("\n--- Transactions Matching Vendor: " + vendorSearch + " ---" + RESET);
 
             for (Transaction t : ledger.getAllTransactions()) {
                 if (t.getVendor().toLowerCase().contains(vendorSearch)) {
@@ -279,7 +282,7 @@ public class Main {
 
     // REPORT: Custom Search - Allows filtering transactions by date, description, vendor, amount
     private static void customSearch(TransactionLedger ledger) {
-        System.out.println("\n--- Custom Search ---");
+        System.out.println("\n" + RESET + "--- Custom Search ---" + GOLD);
 
         String startDateInput = ConsoleHelper.prompt("Start Date (YYYY-MM-DD): ");
         String endDateInput = ConsoleHelper.prompt("End Date (YYYY-MM-DD): ");
@@ -295,7 +298,7 @@ public class Main {
             if (!endDateInput.isEmpty()) endDate = LocalDate.parse(endDateInput);
             if (!amountInput.isEmpty()) amount = Double.parseDouble(amountInput);
         } catch (Exception e) {
-            System.out.println("Interception! Invalid input format. Please try again.");
+            System.out.println(RESET + "Interception! Invalid input format. Please try again.");
             return;
         }
 
@@ -315,9 +318,9 @@ public class Main {
         }
 
         if (filtered.isEmpty()) {
-            System.out.println("No transactions match your search criteria.");
+            System.out.println(RESET + "False Start! No transactions match your search criteria.");
         } else {
-            System.out.println("\n--- Search Results ---");
+            System.out.println("\n" + GOLD + "--- Search Results ---" + RESET);
             for (Transaction t : filtered) {
                 System.out.println(t);
             }
