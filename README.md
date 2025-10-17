@@ -13,7 +13,8 @@
 ## Main Class: Cunstom Search Option under Reports Menu (Team Finance Reports Menu)
 <img width="1043" height="938" alt="Screen Shot 2025-10-16 at 23 56 36 PM" src="https://github.com/user-attachments/assets/f34244b4-55bc-4ca8-a3e3-ee76eb1a2bdc" />
 
-
+## Transaction.java Class:
+<img width="947" height="1015" alt="Screen Shot 2025-10-16 at 23 59 40 PM" src="https://github.com/user-attachments/assets/66edc75d-a37b-488e-a2af-040e80a93dbf" />
 
 
 
